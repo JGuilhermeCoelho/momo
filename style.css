@@ -26,7 +26,6 @@ main {
 }
 
 .top-section {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -58,6 +57,8 @@ main {
   flex-direction: column;
   position: relative;
   z-index: 1;
+  margin-top: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .slider {
@@ -76,12 +77,12 @@ main {
   object-fit: cover;
   object-position: center;
   border-radius: 12px;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.7s ease;
 }
 
-.slider-image.active {
-  opacity: 1;
+.slider-image.fade {
+  opacity: 0;
 }
 
 .slider-button {
@@ -95,7 +96,7 @@ main {
   font-size: 1.2rem;
   transition: background-color 0.3s;
   z-index: 10;
-  flex-shrink: 0;
+  flex-shrink: 0;   
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,6 +132,32 @@ h2 {
   }
 }
 
+@media (max-width: 768px) {
+  .counter {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0 1rem;
+    max-width: 400px;
+  }
+  .counter-section {
+    margin-top: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+  h2 {
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .counter-section {
+    margin-bottom: 4.5rem;
+  }
+  .counter {
+    max-width: 320px;
+  }
+}
+
 .time-block {
   background: var(--secondary-color);
   padding: 0.5rem;
@@ -163,7 +190,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
+  padding: 0;
 }
 
 .message {

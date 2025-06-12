@@ -15,15 +15,15 @@ const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
 
 function updateImage() {
-    sliderImage.classList.remove('active');
-    
+    sliderImage.classList.add('fade');
     setTimeout(() => {
         sliderImage.src = images[currentImageIndex];
-        requestAnimationFrame(() => {
-            sliderImage.classList.add('active');
-        });
-    }, 500);
+    }, 350);
 }
+
+sliderImage.addEventListener('load', () => {
+    sliderImage.classList.remove('fade');
+});
 
 function nextImage() {
     currentImageIndex = (currentImageIndex + 1) % images.length;
