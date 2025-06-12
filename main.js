@@ -1,5 +1,14 @@
 const images = Array.from({ length: 23 }, (_, i) => `assets/${(i + 1).toString().padStart(2, '0')}.jpeg`);
 let currentImageIndex = 0;
+const preloadedImages = new Map();
+
+function preloadImages() {
+    images.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+        preloadedImages.set(src, img);
+    });
+}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -9,6 +18,7 @@ function shuffleArray(array) {
 }
 
 shuffleArray(images);
+preloadImages();
 
 const sliderImage = document.querySelector('.slider-image');
 const prevButton = document.querySelector('.prev');
@@ -16,12 +26,23 @@ const nextButton = document.querySelector('.next');
 
 function updateImage() {
     sliderImage.classList.add('fade');
-    setTimeout(() => {
-        sliderImage.src = images[currentImageIndex];
-    }, 350);
+    const nextImageSrc = images[currentImageIndex];
+    const preloadedImage = preloadedImages.get(nextImageSrc);
+    
+    if (preloadedImage && preloadedImage.complete) {
+        setTimeout(() => {
+            sliderImage.src = preloadedImage.src;
+            sliderImage.classList.remove('fade');
+        }, 150);
+    } else {
+        setTimeout(() => {
+            sliderImage.src = nextImageSrc;
+        }, 150);
+    }
 }
 
 sliderImage.addEventListener('load', () => {
+    if (!sliderImage.classList.contains('fade')) return;
     sliderImage.classList.remove('fade');
 });
 
